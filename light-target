@@ -1,0 +1,28 @@
+const int buttonPin = 2;
+const int ledPin = 6;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(buttonPin, INPUT_PULLUP);
+  pinMode(ledPin, OUTPUT);
+
+}
+
+void loop() {
+  static int lastButtonState = LOW;
+
+  int buttonReading = digitalRead(buttonPin);
+
+  //Check if button was pressed
+  if (buttonReading == HIGH && lastButtonState == LOW) {
+    Serial.println("Button Pressed");
+    digitalWrite(ledPin, LOW);
+    delay(5000);
+    digitalWrite(ledPin, HIGH);
+
+  }
+
+  lastButtonState = buttonReading;
+
+  delay(10);
+}
