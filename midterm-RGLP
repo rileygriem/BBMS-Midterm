@@ -1,0 +1,34 @@
+#include <Servo.h>
+
+Servo servo;
+int fsrSensorPin = A0;  // Analog pin for FSR sensor
+int threshold = 50;     // Threshold value for FSR
+int servoPosition = 0;  // Initial servo position (0 degrees)
+
+void setup() {
+  servo.attach(2);  // Attach servo to digital pin 2
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Read the FSR sensor value
+  int fsrValue = analogRead(fsrSensorPin);
+
+  // Check if FSR value is below the threshold
+  if (fsrValue < threshold) {
+    // If below the threshold, move the servo to 90 degrees
+    servo.write(90);
+    
+    // Wait for 1 second
+    delay(1000);
+
+    // Return the servo to 0 degrees
+    servo.write(0);
+  }
+
+  // Print FSR value to the serial monitor
+  Serial.print("FSR Value: ");
+  Serial.println(fsrValue);
+
+  delay(100);  // Add a small delay to avoid rapid servo movements
+}
